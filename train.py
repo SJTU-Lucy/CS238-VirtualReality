@@ -62,6 +62,7 @@ class VGG19(nn.Module):
         return x
 
 
+# model testing
 model = VGG19(2)
 if torch.cuda.is_available():
     model = model.cuda()
@@ -71,8 +72,8 @@ print(model(a))
 path = "./dataset/train"
 test_path = "./dataset/val"
 classes = ["BigNose", "PointyNose"]
-batch_size = 32
-epochs = 100
+batch_size = 10
+epochs = 10
 lr = 0.001
 
 
@@ -88,9 +89,10 @@ transform = transforms.Compose([
 
 data_train = datasets.ImageFolder(root=path, transform=transform)
 train_loader = DataLoader(data_train, batch_size=batch_size, shuffle=True)
-
+torch.cuda.empty_cache()
 data_test = datasets.ImageFolder(root=test_path, transform=transform)
 test_loader = DataLoader(data_test, batch_size=batch_size, shuffle=True)
+torch.cuda.empty_cache()
 
 
 def get_variable(x):
@@ -102,7 +104,7 @@ def get_variable(x):
 
 
 def train():
-    lossF = nn.MSELoss()
+    lossF = nn.CrossEntropyLoss()
     model.train()
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
     loss_pth = 999999999.99
@@ -117,9 +119,10 @@ def train():
             outputs = model(X_train)
             _, predict = torch.max(outputs.data, 1)
             optimizer.zero_grad()
-            predict = predict.double()
-            y_train = y_train.double()
-            loss = lossF(predict, y_train)
+            # predict = predict.double()
+            # y_train = y_train.double()
+            y_train = y_train.to(torch.int64)
+            loss = lossF(outputs, y_train)
             loss.requires_grad_(True)
             loss.backward()
             optimizer.step()
