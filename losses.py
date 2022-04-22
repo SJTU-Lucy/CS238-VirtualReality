@@ -25,9 +25,13 @@ class StyleTransferLosses(VGG19):
         style_features = style_img
         self.content_features = {}
         self.style_features = {}
+        # self.content_features = model.bs_content(content_img)
+        # self.style_features = model.bs_style(content_img)
         if scale_by_y:
             self.weights = {}
-
+            # for name, data in self.content_features:
+            #     self.weights[name] = T.minimum(data, T.sigmoid(data))
+        # 产生特征图像
         i, j = 0, 0
         self.to(content_img.device)
         with T.no_grad():

@@ -41,9 +41,9 @@ class VGG19(nn.Module):
         self.head = nn.Sequential(*[
             nn.Linear(512 * 5 * 5, 4096),
             nn.ReLU(inplace=True),
-            nn.Linear(4096, 4096),
+            nn.Linear(4096, 200),
             nn.ReLU(inplace=True),
-            nn.Linear(4096, num_classes)
+            nn.Linear(200, num_classes)
         ])
 
     @staticmethod
@@ -61,13 +61,43 @@ class VGG19(nn.Module):
         x = self.head(x)
         return x
 
+    def bs_content(self, input):
+        ret = {}
+        input = self.stages[0](input)
+        input = self.stages[1](input)
+        input = self.stages[2](input)
+        input = self.stages[3](input)
+        ret['conv4'] = input
+        input = self.stages[4](input)
+        ret['conv5'] = input
+        return ret
+
+    def bs_style(self, input):
+        ret = {}
+        input = self.stages[0](input)
+        ret['conv1'] = input
+        input = self.stages[1](input)
+        ret['conv2'] = input
+        input = self.stages[2](input)
+        ret['conv3'] = input
+        input = self.stages[3](input)
+        ret['conv4'] = input
+        input = self.stages[4](input)
+        ret['conv5'] = input
+        return ret
+
 
 # model testing
 model = VGG19(2)
+print(model)
 if torch.cuda.is_available():
     model = model.cuda()
 a = T.rand(5, 3, 160, 160).cuda() if torch.cuda.is_available() else T.rand(5, 3, 160, 160)
+img = T.rand(3, 160, 160).cuda() if torch.cuda.is_available() else T.rand(3, 160, 160)
 print(model(a))
+bs_content = model.bs_content(img)
+print(bs_content['conv4'].shape)
+print(bs_content['conv5'].shape)
 
 path = "./dataset/train"
 test_path = "./dataset/val"
@@ -119,8 +149,6 @@ def train():
             outputs = model(X_train)
             _, predict = torch.max(outputs.data, 1)
             optimizer.zero_grad()
-            # predict = predict.double()
-            # y_train = y_train.double()
             y_train = y_train.to(torch.int64)
             loss = lossF(outputs, y_train)
             loss.requires_grad_(True)
@@ -177,4 +205,4 @@ def test():
     inference_model(test_path, net)
 
 
-train()
+# train()
