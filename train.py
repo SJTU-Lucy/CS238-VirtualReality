@@ -1,14 +1,6 @@
 import torch as T
-import numpy as np
-import torch.nn.functional as F
 import torch
 import torch.nn as nn
-import torchvision.datasets as datasets
-from torch.utils.data import DataLoader
-import torchvision.transforms as transforms
-import torch
-import torch.nn as nn
-from torch.nn import Sequential
 from matplotlib import pyplot as plt
 import torchvision.datasets as datasets
 from torch.utils.data import DataLoader
