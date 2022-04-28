@@ -49,20 +49,25 @@ def transform_clean_list(webface_directory, cleaned_list_path):
     with open(cleaned_list_path, encoding='utf-8') as f:
         cleaned_list = f.readlines()
     cleaned_list = [osp.join(webface_directory, p) for p in cleaned_list]
+
     return cleaned_list
 
 
 def remove_dirty_image(webface_directory, cleaned_list):
     cleaned_list = set([c.split()[0] for c in cleaned_list])
+    count = 0
     for p in paths.list_images(webface_directory):
+        # print(p)
         if p not in cleaned_list:
+            count += 1
             print(f"remove {p}")
             os.remove(p)
+    print(count)
 
 
 if __name__ == '__main__':
-    data = 'CASIA-WebFace/'
+    data = 'CASIA-WebFace/CASIA-WebFace'
     lst = 'cleaned_list.txt'
     cleaned_list = transform_clean_list(data, lst)
-    print(cleaned_list)
-    # remove_dirty_image(data, cleaned_list)
+    # print(cleaned_list)
+    remove_dirty_image(data, cleaned_list)

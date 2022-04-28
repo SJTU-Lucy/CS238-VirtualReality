@@ -11,7 +11,6 @@ from config import config as conf
 from model import FaceMobileNet
 
 
-
 def unique_image(pair_list) -> set:
     """Return unique image path in pair_list.txt"""
     with open(pair_list, 'r') as fd:
@@ -56,11 +55,12 @@ def featurize(images: list, transform, net, device) -> dict:
     Returns:
         Dict (key: imagePath, value: feature)
     """
+    # data of [30, 1, 128, 128]
     data = _preprocess(images, transform)
     data = data.to(device)
     net = net.to(device)
     with torch.no_grad():
-        features = net(data) 
+        features = net(data)
     res = {img: feature for (img, feature) in zip(images, features)}
     return res
 
@@ -97,7 +97,7 @@ def compute_accuracy(feature_dict, pair_list, test_root):
         feature1 = feature_dict[img1].cpu().numpy()
         feature2 = feature_dict[img2].cpu().numpy()
         label = int(label)
-
+        print(feature1)
         similarity = cosin_metric(feature1, feature2)
         similarities.append(similarity)
         labels.append(label)
@@ -107,7 +107,6 @@ def compute_accuracy(feature_dict, pair_list, test_root):
 
 
 if __name__ == '__main__':
-
     model = FaceMobileNet(conf.embedding_size)
     model = nn.DataParallel(model)
     model.load_state_dict(torch.load(conf.test_model, map_location=conf.device))
@@ -120,7 +119,7 @@ if __name__ == '__main__':
     feature_dict = dict()
     for group in groups:
         d = featurize(group, conf.test_transform, model, conf.device)
-        feature_dict.update(d) 
+        feature_dict.update(d)
     accuracy, threshold = compute_accuracy(feature_dict, conf.test_list, conf.test_root) 
 
     print(

@@ -7,7 +7,6 @@ import torch.nn.functional as F
 
 
 class ArcFace(nn.Module):
-    
     def __init__(self, embedding_size, class_num, s=30.0, m=0.50):
         """ArcFace formula: 
             cos(m + theta) = cos(m)cos(theta) - sin(m)sin(theta)
@@ -51,7 +50,6 @@ class ArcFace(nn.Module):
 
 
 class CosFace(nn.Module):
-
     def __init__(self, in_features, out_features, s=30.0, m=0.40):
         """
         Args:

@@ -1,0 +1,8 @@
+2022-04-28 22:56:58,886 [MainThread  ] [INFO ]  Result folder: results\nst-stroke\04.28.22-22.56.58-1
+
+2022-04-28 22:57:00,959 [MainThread  ] [INFO ]  Pretrained weights loaded successfully!
+
+2022-04-28 22:57:26,519 [MainThread  ] [INFO ]  Optimizing brushstroke-styled canvas..
+
+2022-04-28 22:57:31,596 [Thread-1    ] [INFO ]  04.28.22-22.56.58-1	 Elapsed time 0.56mins (ETA N/A)	Epoch 1 Iteration 0	
+

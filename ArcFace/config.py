@@ -26,9 +26,9 @@ class Config:
     ])
 
     # dataset
-    train_root = '/data/CASIA-WebFace'
-    test_root = "/data/lfw-align-128"
-    test_list = "/data/lfw_test_pair.txt"
+    train_root = 'CASIA-WebFace/CASIA-WebFace'
+    test_root = "lfw-align"
+    test_list = "test_pair.txt"
     
     # training settings
     checkpoints = "checkpoints"
@@ -36,10 +36,10 @@ class Config:
     restore_model = ""
     test_model = "checkpoints/24.pth"
     
-    train_batch_size = 64
-    test_batch_size = 60
+    train_batch_size = 30
+    test_batch_size = 30
 
-    epoch = 24
+    epoch = 1
     optimizer = 'sgd'  # ['sgd', 'adam']
     lr = 1e-1
     lr_step = 10
