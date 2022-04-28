@@ -12,6 +12,7 @@ import os
 import os.path as osp
 from imutils import paths
 
+
 def generate_list(images_directory, saved_name=None):
     """生成数据列表
     Args:
@@ -36,6 +37,7 @@ def generate_list(images_directory, saved_name=None):
             f.writelines(data_list)
     return data_list
 
+
 def transform_clean_list(webface_directory, cleaned_list_path):
     """转换webface的干净列表格式
     Args:
@@ -46,9 +48,9 @@ def transform_clean_list(webface_directory, cleaned_list_path):
     """
     with open(cleaned_list_path, encoding='utf-8') as f:
         cleaned_list = f.readlines()
-    cleaned_list = [p.replace('\\', '/') for p in cleaned_list]
     cleaned_list = [osp.join(webface_directory, p) for p in cleaned_list]
     return cleaned_list
+
 
 def remove_dirty_image(webface_directory, cleaned_list):
     cleaned_list = set([c.split()[0] for c in cleaned_list])
@@ -57,8 +59,10 @@ def remove_dirty_image(webface_directory, cleaned_list):
             print(f"remove {p}")
             os.remove(p)
 
+
 if __name__ == '__main__':
-    data = '/data/CASIA-WebFace/'
-    lst = '/data/cleaned_list.txt'
+    data = 'CASIA-WebFace/'
+    lst = 'cleaned_list.txt'
     cleaned_list = transform_clean_list(data, lst)
-    remove_dirty_image(data, cleaned_list)
+    print(cleaned_list)
+    # remove_dirty_image(data, cleaned_list)
