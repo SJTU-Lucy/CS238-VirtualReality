@@ -52,7 +52,6 @@ class StyleTransferLosses(VGG19):
                     j += 1
 
     def forward(self, input):
-        print("input size = ", input.shape)
         content_loss, style_loss = 0., 0.
         features = input
         for name, layer in self.named_children():

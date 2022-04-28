@@ -1,6 +1,0 @@
-2022-04-28 22:29:29,616 [MainThread  ] [INFO ]  Result folder: results\nst-stroke\04.28.22-22.29.29-1
-
-2022-04-28 22:29:31,539 [MainThread  ] [INFO ]  Pretrained weights loaded successfully!
-
-2022-04-28 22:29:34,825 [Thread-1    ] [INFO ]  04.28.22-22.29.29-1	 Elapsed time 0.10mins (ETA N/A)	Epoch 1 Iteration 0	
-
