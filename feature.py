@@ -8,6 +8,7 @@ import math
 
 
 class feature_loss():
+    # 用content image计算原始图像的特征向量
     def __init__(self, input):
         embedding_size = 512
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -25,14 +26,17 @@ class feature_loss():
         self.content_feature = self.featurize(input, self.transform, self.model, self.device)
 
     # input of [1, 3, height, width]
+    # 对于迁移后的图像计算特征，并计算二者差异
     def compute(self, input):
         cur_feature = self.featurize(input, self.transform, self.model, self.device)
         x1 = self.content_feature.cpu().numpy().reshape(-1)
         x2 = cur_feature.cpu().numpy().reshape(-1)
-        cos = np.dot(x1, x2) / (np.linalg.norm(x1) * np.linalg.norm(x2))
-        sin = math.sqrt(1 - cos ** 2)
-        return sin
+        # cos = np.dot(x1, x2) / (np.linalg.norm(x1) * np.linalg.norm(x2))
+        diff = x1 - x2
+        res = np.linalg.norm(diff)
+        return res
 
+    # 灰度化，缩放尺寸
     def _preprocess(self, image, transform):
         res = []
         im = image[0].detach().numpy()
@@ -44,6 +48,7 @@ class feature_loss():
         data = data[:, None, :, :]  # shape: (batch, 1, 128, 128)
         return data
 
+    # 计算特征矩阵
     def featurize(self, input, transform, net, device):
         # input of [1, 3, H, W] -> [1, 1, H, W]
         data = self._preprocess(input, transform)

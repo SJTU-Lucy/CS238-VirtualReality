@@ -77,10 +77,11 @@ width_scale = 0.1
 
 
 # 笔画的风格化
-def run_stroke_style_transfer(num_steps=100, style_weight=3., content_weight=1., tv_weight=0.008, curv_weight=4):
-    # 用于计算loss值
+def run_stroke_style_transfer(num_steps=10, style_weight=3., content_weight=1., tv_weight=0.008, curv_weight=4):
+    # 用于计算content loss和style loss
     vgg_loss = losses.StyleTransferLosses(vgg_weight_file, content_img, style_img,
                                           bs_content_layers, bs_style_layers, scale_by_y=True)
+    # 用于计算feature loss
     feature_loss = feature.feature_loss(content_img)
     vgg_loss.to(device).eval()
 
@@ -98,13 +99,14 @@ def run_stroke_style_transfer(num_steps=100, style_weight=3., content_weight=1.,
     for _ in mon.iter_batch(range(num_steps)):
         optimizer.zero_grad()
         optimizer_color.zero_grad()
+        # 用当前的渲染器渲染图像
         input_img = bs_renderer()
         input_img = input_img[None].permute(0, 3, 1, 2).contiguous()
-        content_score, style_score = vgg_loss(input_img)
         # input of [1, 3, height, width]，评价人脸特征的丢失程度
-        feature_weight = 20
+        feature_weight = 5
         feature_score = feature_weight * feature_loss.compute(input_img)
         # style_core: 风格化评价 content_score: 还原度评价 tv_score: 笔画分布评价 curv_score: 笔画弯曲程度评价
+        content_score, style_score = vgg_loss(input_img)
         style_score *= style_weight
         content_score *= content_weight
         tv_score = tv_weight * losses.total_variation_loss(bs_renderer.location, bs_renderer.curve_s,
@@ -130,31 +132,34 @@ def run_stroke_style_transfer(num_steps=100, style_weight=3., content_weight=1.,
         return bs_renderer()
 
 
-def run_style_transfer(input_img: T.Tensor, num_steps=1000, style_weight=10000., content_weight=1., tv_weight=0):
-    content_img_resized = F.resize(content_img, 1024)
-
+# 像素级优化
+def run_style_transfer(input_img: T.Tensor, num_steps=10, style_weight=10000., content_weight=1., tv_weight=0):
+    # input size of [1, 3, 1364, 1024]
     input_img = input_img.detach()[None].permute(0, 3, 1, 2).contiguous()
     input_img = F.resize(input_img, 1024)
-    input_img = T.nn.Parameter(input_img, requires_grad=True)
-
-    vgg_loss = losses.StyleTransferLosses(vgg_weight_file, content_img_resized, style_img,
+    vgg_loss = losses.StyleTransferLosses(vgg_weight_file, input_img, style_img,
                                           px_content_layers, px_style_layers)
     vgg_loss.to(device).eval()
+    input_img = T.nn.Parameter(input_img, requires_grad=True)
+    feature_loss = feature.feature_loss(input_img)
+
     optimizer = optim.Adam([input_img], lr=1e-3)
     logger.info('Optimizing pixel-wise canvas..')
     for _ in mon.iter_batch(range(num_steps)):
         optimizer.zero_grad()
         input = T.clamp(input_img, 0., 1.)
         content_score, style_score = vgg_loss(input)
-
         style_score *= style_weight
         content_score *= content_weight
+        feature_weight = 100
+        feature_score = feature_weight * feature_loss.compute(input_img)
         tv_score = 0. if not tv_weight else tv_weight * losses.tv_loss(input_img)
-        loss = style_score + content_score + tv_score
+        loss = style_score + content_score + tv_score + feature_score
         loss.backward(inputs=[input_img])
         optimizer.step()
 
         # plot some stuffs
+        mon.plot('feature loss', feature_score)
         mon.plot('pixel style loss', style_score)
         mon.plot('pixel content loss', content_score)
         if tv_weight:
@@ -171,7 +176,7 @@ if __name__ == '__main__':
     canvas = run_stroke_style_transfer()
     # optimize the canvas pixel-wise
     mon.iter = 0
-    mon.print_freq = 1000
+    mon.print_freq = 10
     output = run_style_transfer(canvas)
     mon.imwrite(output_name, output)
     logger.info('Finished!')

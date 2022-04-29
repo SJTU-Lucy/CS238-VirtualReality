@@ -1,0 +1,28 @@
+2022-04-29 14:28:42,192 [MainThread  ] [INFO ]  Result folder: results\nst-stroke\04.29.22-14.28.42-1
+
+2022-04-29 14:28:44,837 [MainThread  ] [INFO ]  Pretrained weights loaded successfully!
+
+2022-04-29 14:29:21,166 [MainThread  ] [INFO ]  Optimizing brushstroke-styled canvas..
+
+2022-04-29 14:29:41,953 [Thread-1    ] [INFO ]  04.29.22-14.28.42-1	 Elapsed time 1.01mins (ETA N/A)	Epoch 1 Iteration 0	stroke-feature-loss	24.59817	stroke-style-loss	8.82473	stroke-content-loss	3.12266	stroke-tv-loss	294.43823	stroke-curvature-loss	0.62852
+
+2022-04-29 14:33:23,367 [Thread-1    ] [INFO ]  04.29.22-14.28.42-1	 Elapsed time 4.70mins (ETA N/A)	Epoch 1 Iteration 10	stroke-feature-loss	23.66823	stroke-style-loss	7.86964	stroke-content-loss	2.77706	stroke-tv-loss	209.49230	stroke-curvature-loss	0.28972
+
+2022-04-29 14:37:07,566 [Thread-1    ] [INFO ]  04.29.22-14.28.42-1	 Elapsed time 8.44mins (ETA N/A)	Epoch 1 Iteration 20	stroke-feature-loss	23.03096	stroke-style-loss	6.56750	stroke-content-loss	2.58570	stroke-tv-loss	111.99883	stroke-curvature-loss	0.16406
+
+2022-04-29 14:40:46,358 [Thread-1    ] [INFO ]  04.29.22-14.28.42-1	 Elapsed time 12.09mins (ETA N/A)	Epoch 1 Iteration 30	stroke-feature-loss	22.78343	stroke-style-loss	5.74818	stroke-content-loss	2.59426	stroke-tv-loss	63.71253	stroke-curvature-loss	0.13584
+
+2022-04-29 14:44:28,793 [Thread-1    ] [INFO ]  04.29.22-14.28.42-1	 Elapsed time 15.80mins (ETA N/A)	Epoch 1 Iteration 40	stroke-feature-loss	22.17878	stroke-style-loss	5.23544	stroke-content-loss	2.62118	stroke-tv-loss	39.35430	stroke-curvature-loss	0.12424
+
+2022-04-29 14:48:06,378 [Thread-1    ] [INFO ]  04.29.22-14.28.42-1	 Elapsed time 19.42mins (ETA N/A)	Epoch 1 Iteration 50	stroke-feature-loss	21.71723	stroke-style-loss	4.85595	stroke-content-loss	2.62371	stroke-tv-loss	26.56354	stroke-curvature-loss	0.11511
+
+2022-04-29 14:51:48,659 [Thread-1    ] [INFO ]  04.29.22-14.28.42-1	 Elapsed time 23.13mins (ETA N/A)	Epoch 1 Iteration 60	stroke-feature-loss	21.39423	stroke-style-loss	4.49450	stroke-content-loss	2.60807	stroke-tv-loss	19.25286	stroke-curvature-loss	0.11061
+
+2022-04-29 14:55:27,615 [Thread-1    ] [INFO ]  04.29.22-14.28.42-1	 Elapsed time 26.78mins (ETA N/A)	Epoch 1 Iteration 70	stroke-feature-loss	21.11085	stroke-style-loss	4.14878	stroke-content-loss	2.59256	stroke-tv-loss	14.70982	stroke-curvature-loss	0.11358
+
+2022-04-29 14:59:12,077 [Thread-1    ] [INFO ]  04.29.22-14.28.42-1	 Elapsed time 30.52mins (ETA N/A)	Epoch 1 Iteration 80	stroke-feature-loss	20.88829	stroke-style-loss	3.83953	stroke-content-loss	2.62087	stroke-tv-loss	11.68022	stroke-curvature-loss	0.11999
+
+2022-04-29 15:02:55,563 [Thread-1    ] [INFO ]  04.29.22-14.28.42-1	 Elapsed time 34.24mins (ETA N/A)	Epoch 1 Iteration 90	stroke-feature-loss	20.57924	stroke-style-loss	3.58703	stroke-content-loss	2.61485	stroke-tv-loss	9.52223	stroke-curvature-loss	0.12410
+
+2022-04-29 15:06:24,262 [Thread-1    ] [INFO ]  04.29.22-14.28.42-1	 Elapsed time 37.72mins (ETA N/A)	Epoch 1 Iteration 0	stroke-feature-loss	20.60345	stroke-style-loss	3.40467	stroke-content-loss	2.60715	stroke-tv-loss	8.00700	stroke-curvature-loss	0.12641
+
