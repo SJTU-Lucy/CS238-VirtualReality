@@ -25,12 +25,11 @@ class StyleTransferLosses(VGG19):
         style_features = style_img
         self.content_features = {}
         self.style_features = {}
-        # self.content_features = model.bs_content(content_img)
-        # self.style_features = model.bs_style(content_img)
         if scale_by_y:
             self.weights = {}
-            # for name, data in self.content_features:
-            #     self.weights[name] = T.minimum(data, T.sigmoid(data))
+        else:
+            self.modified_features = {}
+            self.eps = 0.0001
         # 产生特征图像
         i, j = 0, 0
         self.to(content_img.device)
@@ -38,18 +37,22 @@ class StyleTransferLosses(VGG19):
             for name, layer in self.named_children():
                 content_features = layer(content_features)
                 style_features = layer(style_features)
-                if name in content_layers:
-                    self.content_features[name] = content_features
-                    if scale_by_y:
-                        self.weights[name] = T.minimum(content_features, T.sigmoid(content_features))
-
-                    self.content_weights[name] = content_weights[i]
-                    i += 1
-
                 if name in style_layers:
                     self.style_features[name] = utils.gram_matrix(style_features)
                     self.style_weights[name] = style_weights[j]
                     j += 1
+                if name in content_layers:
+                    self.content_features[name] = content_features
+                    if scale_by_y:
+                        self.weights[name] = T.minimum(content_features, T.sigmoid(content_features))
+                    else:
+                        print(content_features.size())
+                        print(style_features.size())
+                        Gl = style_features / (content_features + self.eps)
+                        Gl = T.clamp(Gl, min=0.7, max=5)
+                        self.modified_features[name] = content_features * Gl
+                    self.content_weights[name] = content_weights[i]
+                    i += 1
 
     def forward(self, input):
         content_loss, style_loss = 0., 0.
@@ -57,12 +60,12 @@ class StyleTransferLosses(VGG19):
         for name, layer in self.named_children():
             features = layer(features)
             if name in self.content_layers:
-                loss = features - self.content_features[name]
                 if self.scale_by_y:
+                    loss = features - self.content_features[name]
                     loss *= self.weights[name]
-
+                else:
+                    loss = features - self.modified_features[name]
                 content_loss += (T.mean(loss ** 2) * self.content_weights[name])
-
             if name in self.style_layers:
                 loss = F.mse_loss(self.style_features[name], utils.gram_matrix(features), reduction='sum')
                 style_loss += (loss * self.style_weights[name])

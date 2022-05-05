@@ -55,7 +55,7 @@ device = torch.device(args.device)
 # desired size of the output image
 imsize = args.img_size
 content_img = utils.image_loader(content_img_file, imsize, device)
-style_img = utils.image_loader(style_img_file, 224, device)
+style_img = utils.image_loader(style_img_file, imsize, device)
 output_name = f'{os.path.basename(content_img_file).split(".")[0]}-{os.path.basename(style_img_file).split(".")[0]}'
 
 # desired depth layers to compute style/content losses :
@@ -77,7 +77,7 @@ width_scale = 0.1
 
 
 # 笔画的风格化
-def run_stroke_style_transfer(num_steps=10, style_weight=3., content_weight=1., tv_weight=0.008, curv_weight=4):
+def run_stroke_style_transfer(num_steps=2, style_weight=3., content_weight=1., tv_weight=0.008, curv_weight=4):
     # 用于计算content loss和style loss
     vgg_loss = losses.StyleTransferLosses(vgg_weight_file, content_img, style_img,
                                           bs_content_layers, bs_style_layers, scale_by_y=True)
@@ -133,10 +133,10 @@ def run_stroke_style_transfer(num_steps=10, style_weight=3., content_weight=1., 
 
 
 # 像素级优化
-def run_style_transfer(input_img: T.Tensor, num_steps=10, style_weight=10000., content_weight=1., tv_weight=0):
+def run_style_transfer(input_img: T.Tensor, num_steps=2, style_weight=10000., content_weight=1., tv_weight=0):
     # input size of [1, 3, 1364, 1024]
     input_img = input_img.detach()[None].permute(0, 3, 1, 2).contiguous()
-    input_img = F.resize(input_img, 1024)
+    input_img = F.resize(input_img, imsize)
     vgg_loss = losses.StyleTransferLosses(vgg_weight_file, input_img, style_img,
                                           px_content_layers, px_style_layers)
     vgg_loss.to(device).eval()
