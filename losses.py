@@ -46,8 +46,6 @@ class StyleTransferLosses(VGG19):
                     if scale_by_y:
                         self.weights[name] = T.minimum(content_features, T.sigmoid(content_features))
                     else:
-                        print(content_features.size())
-                        print(style_features.size())
                         Gl = style_features / (content_features + self.eps)
                         Gl = T.clamp(Gl, min=0.7, max=5)
                         self.modified_features[name] = content_features * Gl

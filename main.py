@@ -20,9 +20,9 @@ parser.add_argument('--img_size', '-s', type=int, default=512,
                     help='The smaller dimension of content image is resized into this size. Default: 512.')
 parser.add_argument('--canvas_color', default='gray', type=str,
                     help='Canvas background color (`gray` (default), `white`, `black` or `noise`).')
-parser.add_argument('--num_strokes', default=5000, type=int,
+parser.add_argument('--num_strokes', default=10000, type=int,
                     help='Number of strokes to draw. Default: 5000.')
-parser.add_argument('--samples_per_curve', default=10, type=int,
+parser.add_argument('--samples_per_curve', default=20, type=int,
                     help='Number of points to sample per parametrized curve. Default: 10.')
 parser.add_argument('--brushes_per_pixel', default=20, type=int,
                     help='Number of brush strokes to be drawn per pixel. Default: 20.')
@@ -77,7 +77,7 @@ width_scale = 0.1
 
 
 # 笔画的风格化
-def run_stroke_style_transfer(num_steps=2, style_weight=3., content_weight=1., tv_weight=0.008, curv_weight=4):
+def run_stroke_style_transfer(num_steps=100, style_weight=3., content_weight=1., tv_weight=0.008, curv_weight=4):
     # 用于计算content loss和style loss
     vgg_loss = losses.StyleTransferLosses(vgg_weight_file, content_img, style_img,
                                           bs_content_layers, bs_style_layers, scale_by_y=True)
@@ -133,7 +133,7 @@ def run_stroke_style_transfer(num_steps=2, style_weight=3., content_weight=1., t
 
 
 # 像素级优化
-def run_style_transfer(input_img: T.Tensor, num_steps=2, style_weight=10000., content_weight=1., tv_weight=0):
+def run_style_transfer(input_img: T.Tensor, num_steps=100, style_weight=10000., content_weight=1., tv_weight=0):
     # input size of [1, 3, 1364, 1024]
     input_img = input_img.detach()[None].permute(0, 3, 1, 2).contiguous()
     input_img = F.resize(input_img, imsize)
