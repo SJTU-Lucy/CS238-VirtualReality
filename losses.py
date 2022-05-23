@@ -38,7 +38,8 @@ class StyleTransferLosses(VGG19):
                 content_features = layer(content_features)
                 style_features = layer(style_features)
                 if name in style_layers:
-                    self.style_features[name] = utils.gram_matrix(style_features)
+                    # self.style_features[name] = utils.gram_matrix(style_features)
+                    self.style_features[name] = style_features
                     self.style_weights[name] = style_weights[j]
                     j += 1
                 if name in content_layers:
@@ -58,6 +59,7 @@ class StyleTransferLosses(VGG19):
         for name, layer in self.named_children():
             features = layer(features)
             if name in self.content_layers:
+                loss = features - self.content_features[name]
                 if self.scale_by_y:
                     loss = features - self.content_features[name]
                     loss *= self.weights[name]
@@ -65,7 +67,7 @@ class StyleTransferLosses(VGG19):
                     loss = features - self.modified_features[name]
                 content_loss += (T.mean(loss ** 2) * self.content_weights[name])
             if name in self.style_layers:
-                loss = F.mse_loss(self.style_features[name], utils.gram_matrix(features), reduction='sum')
+                loss = F.mse_loss(utils.gram_matrix(self.style_features[name]), utils.gram_matrix(features), reduction='sum')
                 style_loss += (loss * self.style_weights[name])
 
         return content_loss, style_loss
