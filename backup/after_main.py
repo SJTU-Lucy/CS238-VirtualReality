@@ -84,7 +84,7 @@ dist_index = 2
 
 
 # 笔画的风格化
-def run_stroke_style_transfer(num_steps=30, style_weight=3., content_weight=1., tv_weight=0.008, curv_weight=4):
+def run_stroke_style_transfer(num_steps=100, style_weight=3., content_weight=2., tv_weight=0.008, curv_weight=4):
     # 用于计算content loss和style loss
     vgg_loss = losses.StyleTransferLosses(vgg_weight_file, content_img, style_img,
                                           bs_content_layers, bs_style_layers, scale_by_y=True)
@@ -125,6 +125,7 @@ def run_stroke_style_transfer(num_steps=30, style_weight=3., content_weight=1., 
         img1, img2 = T.squeeze(T.max(input_img, dim=1)[0]), T.squeeze(T.max(content_img, dim=1)[0])
         dist = T.nn.PairwiseDistance(p=dist_index)
         content_score = dist(img1, img2).mean()
+        content_score *= content_weight
         style_score *= style_weight
         # content_score *= content_weight
         tv_score = tv_weight * losses.total_variation_loss(bs_renderer.location, bs_renderer.curve_s,
@@ -158,7 +159,7 @@ def run_stroke_style_transfer(num_steps=30, style_weight=3., content_weight=1., 
 
 
 # 像素级优化
-def run_style_transfer(input_img: T.Tensor, num_steps=30, style_weight=10000., content_weight=1., tv_weight=0):
+def run_style_transfer(input_img: T.Tensor, num_steps=200, style_weight=1000., content_weight=10., tv_weight=0):
     # input size of [1, 3, 1364, 1024]
     input_img = input_img.detach()[None].permute(0, 3, 1, 2).contiguous()
     input_img = F.resize(input_img, 512)#1024)

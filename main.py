@@ -77,7 +77,7 @@ width_scale = 0.1
 
 # additional options
 optimizer_choice = ['Adam', 'RMSProp'][1]
-decreasing_learning_rate = 0.9  # 'None' if not used
+decreasing_learning_rate = None  # 'None' if not used
 shape_lr = 5e-3
 color_lr = 1e-2
 dist_index = 2
@@ -146,7 +146,6 @@ def run_stroke_style_transfer(num_steps=100, style_weight=3., content_weight=2.,
         if mon.iter % mon.print_freq == 0:
             mon.imwrite('stroke stylized', input_img)
 
-        # decreasing learning rate
         if decreasing_learning_rate:
             for param_group in optimizer.param_groups:
                 param_group['lr'] *= decreasing_learning_rate
