@@ -15,12 +15,12 @@ import losses
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--content_img_file', type=str, default='images/man.jpg', help='Content image file')
-parser.add_argument('--style_img_file', type=str, default='images/van_gogh.jpg', help='Style image file')
+parser.add_argument('--style_img_file', type=str, default='images/picasso.jpg', help='Style image file')
 parser.add_argument('--img_size', '-s', type=int, default=512,
                     help='The smaller dimension of content image is resized into this size. Default: 512.')
 parser.add_argument('--canvas_color', default='gray', type=str,
                     help='Canvas background color (`gray` (default), `white`, `black` or `noise`).')
-parser.add_argument('--num_strokes', default=10000, type=int,
+parser.add_argument('--num_strokes', default=5000, type=int,
                     help='Number of strokes to draw. Default: 5000.')
 parser.add_argument('--samples_per_curve', default=20, type=int,
                     help='Number of points to sample per parametrized curve. Default: 10.')
@@ -76,7 +76,7 @@ length_scale = 1.1
 width_scale = 0.1
 
 # additional options
-optimizer_choice = ['Adam', 'RMSProp'][1]
+optimizer_choice = ['Adam', 'RMSProp'][0]
 decreasing_learning_rate = None  # 'None' if not used
 shape_lr = 5e-3
 color_lr = 1e-2
@@ -146,7 +146,7 @@ def run_stroke_style_transfer(num_steps=100, style_weight=3., content_weight=2.,
         if mon.iter % mon.print_freq == 0:
             mon.imwrite('stroke stylized', input_img)
 
-        if decreasing_learning_rate:
+        if decreasing_learning_rate and optimizer_choice == 'RMSProp':
             for param_group in optimizer.param_groups:
                 param_group['lr'] *= decreasing_learning_rate
             for param_group in optimizer_color.param_groups:
