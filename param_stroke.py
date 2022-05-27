@@ -144,7 +144,7 @@ class BrushStrokeRenderer(T.nn.Module):
         self.curve_c = T.nn.Parameter(T.from_numpy(np.array(c, 'float32')), requires_grad=True)
         self.color = T.nn.Parameter(T.from_numpy(color), requires_grad=True)
         self.location = T.nn.Parameter(T.from_numpy(np.array(location, 'float32')), requires_grad=True)
-        self.width = T.nn.Parameter(T.from_numpy(np.log(np.minimum(width, 1e-3))), requires_grad=True)
+        self.width = T.nn.Parameter(T.from_numpy(np.log(np.minimum(width, 10))), requires_grad=True)
 
     # 用画笔信息画图
     def forward(self):

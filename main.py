@@ -20,7 +20,7 @@ parser.add_argument('--img_size', '-s', type=int, default=512,
                     help='The smaller dimension of content image is resized into this size. Default: 512.')
 parser.add_argument('--canvas_color', default='gray', type=str,
                     help='Canvas background color (`gray` (default), `white`, `black` or `noise`).')
-parser.add_argument('--num_strokes', default=5000, type=int,
+parser.add_argument('--num_strokes', default=10000, type=int,
                     help='Number of strokes to draw. Default: 5000.')
 parser.add_argument('--samples_per_curve', default=20, type=int,
                     help='Number of points to sample per parametrized curve. Default: 10.')
@@ -73,18 +73,19 @@ _, _, H, W = content_img.shape
 canvas_height = H
 canvas_width = W
 length_scale = 1.1
-width_scale = 0.1
+width_scale = 0.2
 
 # additional options
 optimizer_choice = ['Adam', 'RMSProp'][0]
 decreasing_learning_rate = None  # 'None' if not used
-shape_lr = 5e-3
+shape_lr = 2e-3
 color_lr = 1e-2
 dist_index = 2
 
 
 # 笔画的风格化
-def run_stroke_style_transfer(num_steps=100, style_weight=3., content_weight=2., tv_weight=0.008, curv_weight=4):
+def run_stroke_style_transfer(num_steps=100, style_weight=5., content_weight=3., feature_weight=20,
+                              tv_weight=0.01, curv_weight=4):
     # 用于计算content loss和style loss
     vgg_loss = losses.StyleTransferLosses(vgg_weight_file, content_img, style_img,
                                           bs_content_layers, bs_style_layers, scale_by_y=True)
@@ -117,7 +118,6 @@ def run_stroke_style_transfer(num_steps=100, style_weight=3., content_weight=2.,
         input_img = bs_renderer()
         input_img = input_img[None].permute(0, 3, 1, 2).contiguous()
         # input of [1, 3, height, width]，评价人脸特征的丢失程度
-        feature_weight = 10
         feature_score = feature_weight * feature_loss.compute(input_img)
         # style_core: 风格化评价 content_score: 还原度评价 tv_score: 笔画分布评价 curv_score: 笔画弯曲程度评价
         _, style_score = vgg_loss(input_img)
@@ -125,6 +125,7 @@ def run_stroke_style_transfer(num_steps=100, style_weight=3., content_weight=2.,
         img1, img2 = T.squeeze(T.max(input_img, dim=1)[0]), T.squeeze(T.max(content_img, dim=1)[0])
         dist = T.nn.PairwiseDistance(p=dist_index)
         content_score = dist(img1, img2).mean()
+        content_score *= content_weight
         style_score *= style_weight
         # content_score *= content_weight
         tv_score = tv_weight * losses.total_variation_loss(bs_renderer.location, bs_renderer.curve_s,
@@ -157,7 +158,8 @@ def run_stroke_style_transfer(num_steps=100, style_weight=3., content_weight=2.,
 
 
 # 像素级优化
-def run_style_transfer(input_img: T.Tensor, num_steps=200, style_weight=1000., content_weight=10., tv_weight=0):
+def run_style_transfer(input_img: T.Tensor, num_steps=200, style_weight=10000., feature_weight=200, content_weight=10.,
+                       tv_weight=0):
     # input size of [1, 3, 1364, 1024]
     input_img = input_img.detach()[None].permute(0, 3, 1, 2).contiguous()
     input_img = F.resize(input_img, imsize)
@@ -181,15 +183,15 @@ def run_style_transfer(input_img: T.Tensor, num_steps=200, style_weight=1000., c
         content_score, style_score = vgg_loss(input)
         style_score *= style_weight
         content_score *= content_weight
-        feature_weight = 100
-        feature_score = feature_weight * feature_loss.compute(input_img)
+        feature_score = feature_loss.compute(input_img)
+        feature_score *= feature_weight
         tv_score = 0. if not tv_weight else tv_weight * losses.tv_loss(input_img)
         loss = style_score + content_score + tv_score + feature_score
         loss.backward(inputs=[input_img])
         optimizer.step()
 
         # update learning rate
-        if decreasing_learning_rate:
+        if decreasing_learning_rate and optimizer_choice == 'RMSProp':
             for param_group in optimizer.param_groups:
                 param_group['lr'] *= decreasing_learning_rate
 
@@ -199,7 +201,6 @@ def run_style_transfer(input_img: T.Tensor, num_steps=200, style_weight=1000., c
         mon.plot('pixel content loss', content_score)
         if tv_weight:
             mon.plot('pixel tv loss', tv_score)
-
         if mon.iter % mon.print_freq == 0:
             mon.imwrite('pixel stylized', input)
 
