@@ -1,0 +1,74 @@
+2022-06-01 12:51:16,073 [MainThread  ] [INFO ]  Result folder: results\nst-stroke\06.01.22-12.51.16-1
+
+2022-06-01 12:51:19,149 [MainThread  ] [INFO ]  Pretrained weights loaded successfully!
+
+2022-06-01 12:52:50,840 [MainThread  ] [INFO ]  Optimizing brushstroke-styled canvas..
+
+2022-06-01 12:53:55,956 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 2.69mins (ETA N/A)	Epoch 1 Iteration 0	stroke-feature-loss	69.09793	stroke-style-loss	27.56746	stroke-content-loss	22.18261	stroke-tv-loss	14.10489	stroke-curvature-loss	1.11072
+
+2022-06-01 13:01:17,881 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 10.06mins (ETA N/A)	Epoch 1 Iteration 10	stroke-feature-loss	73.28325	stroke-style-loss	23.57563	stroke-content-loss	22.13113	stroke-tv-loss	13.99973	stroke-curvature-loss	1.10487
+
+2022-06-01 13:08:17,510 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 17.05mins (ETA N/A)	Epoch 1 Iteration 20	stroke-feature-loss	78.88752	stroke-style-loss	20.57388	stroke-content-loss	22.08313	stroke-tv-loss	13.80880	stroke-curvature-loss	1.09504
+
+2022-06-01 13:15:25,876 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 24.19mins (ETA N/A)	Epoch 1 Iteration 30	stroke-feature-loss	82.55667	stroke-style-loss	18.29602	stroke-content-loss	22.08688	stroke-tv-loss	13.62897	stroke-curvature-loss	1.08628
+
+2022-06-01 13:22:24,056 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 31.16mins (ETA N/A)	Epoch 1 Iteration 40	stroke-feature-loss	86.12288	stroke-style-loss	16.64808	stroke-content-loss	22.10724	stroke-tv-loss	13.45704	stroke-curvature-loss	1.07829
+
+2022-06-01 13:28:35,122 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 37.34mins (ETA N/A)	Epoch 1 Iteration 50	stroke-feature-loss	87.41045	stroke-style-loss	15.56762	stroke-content-loss	22.13324	stroke-tv-loss	13.28289	stroke-curvature-loss	1.07061
+
+2022-06-01 13:34:58,644 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 43.74mins (ETA N/A)	Epoch 1 Iteration 60	stroke-feature-loss	89.45487	stroke-style-loss	14.78576	stroke-content-loss	22.16303	stroke-tv-loss	13.11241	stroke-curvature-loss	1.06301
+
+2022-06-01 13:41:49,021 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 50.57mins (ETA N/A)	Epoch 1 Iteration 70	stroke-feature-loss	90.43056	stroke-style-loss	14.17272	stroke-content-loss	22.19032	stroke-tv-loss	12.94429	stroke-curvature-loss	1.05538
+
+2022-06-01 13:48:28,386 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 57.23mins (ETA N/A)	Epoch 1 Iteration 80	stroke-feature-loss	91.04897	stroke-style-loss	13.68015	stroke-content-loss	22.21256	stroke-tv-loss	12.78284	stroke-curvature-loss	1.04774
+
+2022-06-01 13:55:15,724 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.07hrs (ETA N/A)	Epoch 1 Iteration 90	stroke-feature-loss	91.38373	stroke-style-loss	13.25365	stroke-content-loss	22.23137	stroke-tv-loss	12.62974	stroke-curvature-loss	1.04008
+
+2022-06-01 14:01:32,393 [MainThread  ] [INFO ]  Pretrained weights loaded successfully!
+
+2022-06-01 14:01:36,181 [MainThread  ] [INFO ]  Optimizing pixel-wise canvas..
+
+2022-06-01 14:01:41,672 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.17hrs (ETA N/A)	Epoch 1 Iteration 0	stroke-feature-loss	92.83170	stroke-style-loss	12.88632	stroke-content-loss	22.24523	stroke-tv-loss	12.48486	stroke-curvature-loss	1.03281	feature-loss	0.00000	pixel-style-loss	25399.27539	pixel-content-loss	21.16948
+
+2022-06-01 14:02:16,981 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.18hrs (ETA N/A)	Epoch 1 Iteration 10	feature-loss	30.67560	pixel-style-loss	21103.98438	pixel-content-loss	23.17657
+
+2022-06-01 14:02:56,057 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.19hrs (ETA N/A)	Epoch 1 Iteration 20	feature-loss	45.93058	pixel-style-loss	16965.98438	pixel-content-loss	27.42271
+
+2022-06-01 14:03:37,370 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.21hrs (ETA N/A)	Epoch 1 Iteration 30	feature-loss	70.79135	pixel-style-loss	14532.77051	pixel-content-loss	31.47226
+
+2022-06-01 14:04:18,860 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.22hrs (ETA N/A)	Epoch 1 Iteration 40	feature-loss	105.22371	pixel-style-loss	12834.76367	pixel-content-loss	35.36678
+
+2022-06-01 14:05:00,136 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.23hrs (ETA N/A)	Epoch 1 Iteration 50	feature-loss	117.55625	pixel-style-loss	11644.38965	pixel-content-loss	39.09685
+
+2022-06-01 14:05:41,424 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.24hrs (ETA N/A)	Epoch 1 Iteration 60	feature-loss	137.83256	pixel-style-loss	10812.30664	pixel-content-loss	42.28638
+
+2022-06-01 14:06:22,578 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.25hrs (ETA N/A)	Epoch 1 Iteration 70	feature-loss	147.60959	pixel-style-loss	10213.48242	pixel-content-loss	44.86944
+
+2022-06-01 14:07:02,745 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.26hrs (ETA N/A)	Epoch 1 Iteration 80	feature-loss	165.69554	pixel-style-loss	9760.09180	pixel-content-loss	47.03405
+
+2022-06-01 14:07:43,244 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.27hrs (ETA N/A)	Epoch 1 Iteration 90	feature-loss	178.03417	pixel-style-loss	9401.49316	pixel-content-loss	48.85737
+
+2022-06-01 14:08:24,148 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.29hrs (ETA N/A)	Epoch 1 Iteration 100	feature-loss	172.17841	pixel-style-loss	9106.57715	pixel-content-loss	50.43169
+
+2022-06-01 14:09:05,195 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.30hrs (ETA N/A)	Epoch 1 Iteration 110	feature-loss	173.79035	pixel-style-loss	8856.13574	pixel-content-loss	51.85439
+
+2022-06-01 14:09:43,373 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.31hrs (ETA N/A)	Epoch 1 Iteration 120	feature-loss	181.20851	pixel-style-loss	8638.42773	pixel-content-loss	53.16504
+
+2022-06-01 14:10:24,110 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.32hrs (ETA N/A)	Epoch 1 Iteration 130	feature-loss	177.75097	pixel-style-loss	8446.06836	pixel-content-loss	54.35302
+
+2022-06-01 14:11:05,132 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.33hrs (ETA N/A)	Epoch 1 Iteration 140	feature-loss	173.87139	pixel-style-loss	8273.92090	pixel-content-loss	55.44267
+
+2022-06-01 14:11:44,886 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.34hrs (ETA N/A)	Epoch 1 Iteration 150	feature-loss	179.26556	pixel-style-loss	8118.21875	pixel-content-loss	56.45286
+
+2022-06-01 14:12:24,851 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.35hrs (ETA N/A)	Epoch 1 Iteration 160	feature-loss	180.81976	pixel-style-loss	7975.61084	pixel-content-loss	57.41786
+
+2022-06-01 14:13:05,694 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.36hrs (ETA N/A)	Epoch 1 Iteration 170	feature-loss	177.57199	pixel-style-loss	7843.71729	pixel-content-loss	58.34241
+
+2022-06-01 14:13:44,963 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.38hrs (ETA N/A)	Epoch 1 Iteration 180	feature-loss	176.84248	pixel-style-loss	7720.79980	pixel-content-loss	59.22326
+
+2022-06-01 14:14:25,234 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.39hrs (ETA N/A)	Epoch 1 Iteration 190	feature-loss	170.14207	pixel-style-loss	7605.06934	pixel-content-loss	60.06155
+
+2022-06-01 14:15:02,386 [MainThread  ] [INFO ]  Finished!
+
+2022-06-01 14:15:02,849 [Thread-1    ] [INFO ]  06.01.22-12.51.16-1	 Elapsed time 1.40hrs (ETA N/A)	Epoch 1 Iteration 200	feature-loss	167.47035	pixel-style-loss	7500.93994	pixel-content-loss	60.81025
+

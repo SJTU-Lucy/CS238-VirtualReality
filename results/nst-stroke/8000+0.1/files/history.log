@@ -1,0 +1,16 @@
+2022-06-02 10:51:12,688 [MainThread  ] [INFO ]  Result folder: results\nst-stroke\06.02.22-10.51.12-1
+
+2022-06-02 10:51:15,343 [MainThread  ] [INFO ]  Pretrained weights loaded successfully!
+
+2022-06-02 10:51:54,369 [MainThread  ] [INFO ]  Optimizing brushstroke-styled canvas..
+
+2022-06-02 10:52:34,969 [Thread-1    ] [INFO ]  06.02.22-10.51.12-1	 Elapsed time 1.39mins (ETA N/A)	Epoch 1 Iteration 0	stroke-feature-loss	55.39188	stroke-style-loss	26.28642	stroke-content-loss	407.68427	stroke-tv-loss	135.04646	stroke-curvature-loss	0.67895
+
+2022-06-02 10:52:50,741 [MainThread  ] [INFO ]  Pretrained weights loaded successfully!
+
+2022-06-02 10:52:54,855 [MainThread  ] [INFO ]  Optimizing pixel-wise canvas..
+
+2022-06-02 10:52:55,000 [MainThread  ] [INFO ]  Finished!
+
+2022-06-02 10:52:55,230 [Thread-1    ] [INFO ]  06.02.22-10.51.12-1	 Elapsed time 1.73mins (ETA N/A)	Epoch 1 Iteration 0	
+
