@@ -9,19 +9,18 @@ from neural_monitor import logger
 import argparse
 
 from param_stroke import BrushStrokeRenderer
+from styleRecognization import StyleClassify
 import feature
 import utils
 import losses
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--content_img_file', type=str, default='images/man.jpg', help='Content image file')
-parser.add_argument('--style_img_file', type=str, default='images/picasso.jpg', help='Style image file')
+parser.add_argument('--style_img_file', type=str, default='images/van_gogh.jpg', help='Style image file')
 parser.add_argument('--img_size', '-s', type=int, default=512,
                     help='The smaller dimension of content image is resized into this size. Default: 512.')
 parser.add_argument('--canvas_color', default='gray', type=str,
                     help='Canvas background color (`gray` (default), `white`, `black` or `noise`).')
-parser.add_argument('--num_strokes', default=15000, type=int,
-                    help='Number of strokes to draw. Default: 5000.')
 parser.add_argument('--samples_per_curve', default=20, type=int,
                     help='Number of points to sample per parametrized curve. Default: 10.')
 parser.add_argument('--brushes_per_pixel', default=20, type=int,
@@ -44,7 +43,6 @@ content_img_file = args.content_img_file
 model_name = 'nst-stroke'
 root = args.output_path
 vgg_weight_file = 'vgg_weights/vgg19_weights_normalized.h5'
-# vgg_weight_file = 'vgg_weights/vgg19_weights_tf_dim_ordering_tf_kernels_notop.h5'
 print_freq = 10
 mon.initialize(model_name=model_name, root=root, print_freq=print_freq)
 mon.backup(('main.py', 'param_stroke.py', 'utils.py', 'losses.py', 'vgg.py'))
@@ -72,14 +70,19 @@ _, _, H, W = content_img.shape
 canvas_height = H
 canvas_width = W
 length_scale = 1.1
-category = 1
-width_scale = [0.1, 0.8, 1][category]
+
+# diy part
+prob, category = StyleClassify.predict(style_img_file)
+width_list = [0.1, 0.8, 0.2]
+width_scale = width_list[0] * prob[0] + width_list[1] * prob[1] + width_list[2] * prob[2]
 # 10000 for van gogh, 5000 for picasso, 15000 for da vinci
-num_strokes = [8000, 2000, 15000][category]
+num_list = [8000, 2000, 10000]
+num_strokes = num_list[0] * prob[0] + num_list[1] * prob[1] + num_list[2] * prob[2]
+num_strokes = int(num_strokes)
 optimizer_choice = ['Adam', 'RMSProp'][0]
 decreasing_learning_rate = None  # 'None' if not used
-shape_lr = [1e-3, 1e-3, 1e-3][category]
-color_lr = [1e-2, 1e-2, 1e-2][category]
+shape_lr = 1e-3
+color_lr = 1e-2
 dist_index = 1
 
 
