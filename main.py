@@ -73,10 +73,10 @@ length_scale = 1.1
 
 # diy part
 prob, category = StyleClassify.predict(style_img_file)
-width_list = [0.1, 0.8, 0.2]
+width_list = [0.2, 0.8, 0.2]
 width_scale = width_list[0] * prob[0] + width_list[1] * prob[1] + width_list[2] * prob[2]
-# 10000 for van gogh, 5000 for picasso, 15000 for da vinci
-num_list = [8000, 2000, 10000]
+# 8000 for van gogh, 2000 for picasso, 10000 for da vinci
+num_list = [10000, 2000, 15000]
 num_strokes = num_list[0] * prob[0] + num_list[1] * prob[1] + num_list[2] * prob[2]
 num_strokes = int(num_strokes)
 optimizer_choice = ['Adam', 'RMSProp'][0]
